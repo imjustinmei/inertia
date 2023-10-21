@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Inertia",
+  "description": "Periodic notifications to be less inert",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "128": "icons/icon.png"
+    }
+  },
+  "permissions": ["alarms", "storage", "notifications", "offscreen"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icons/icon.png"
+  }
+}
