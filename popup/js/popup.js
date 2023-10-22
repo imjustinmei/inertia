@@ -8,7 +8,6 @@ const save = () => {
   chrome.storage.local.set({
     times,
     names,
-    level: slider.value,
   });
 };
 
