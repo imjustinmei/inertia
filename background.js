@@ -52,12 +52,15 @@ const notification = (level, name) => {
 };
 
 const play = async (source) => {
-  if (!(await chrome.offscreen.hasDocument())) {
-    await chrome.offscreen.createDocument({
-      url: 'offscreen.html',
-      reasons: ['AUDIO_PLAYBACK'],
-      justification: 'notification',
-    });
-  }
+  await createOffscreen();
   await chrome.runtime.sendMessage({ source });
+};
+
+const createOffscreen = async () => {
+  if (await chrome.offscreen.hasDocument()) return;
+  await chrome.offscreen.createDocument({
+    url: 'offscreen.html',
+    reasons: ['AUDIO_PLAYBACK'],
+    justification: 'notification',
+  });
 };

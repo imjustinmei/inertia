@@ -5,7 +5,7 @@ const title = document.getElementById('title');
 const slider = document.getElementById('level');
 
 const create = (currentValue, timeValue, nameValue) => {
-  if (current.length > 2) return;
+  if (times.length > 2) return;
   const item = document.createElement('div');
   item.className = 'item';
 
