@@ -1,21 +1,12 @@
 chrome.runtime.onStartup.addListener(() => {
   clearAlarms();
+  chrome.storage.local.get(['times', 'names'], (res) => createAlarms(res.names, res.times, res.times));
   chrome.storage.local.set({ start: Date.now() });
 });
 
-chrome.runtime.onMessage.addListener((req, sender, res) => {
-  if (req.action === 'count') {
-    req.times.forEach((time, i) => {
-      if (time === 0 || req.names[i] === '') return;
-
-      chrome.alarms.create(req.names[i], {
-        delayInMinutes: req.current[i] / 60,
-        periodInMinutes: time / 60,
-      });
-    });
-  } else if (req.action === 'pause') {
-    clearAlarms();
-  }
+chrome.runtime.onMessage.addListener((req) => {
+  if (req.action === 'count') createAlarms(req.names, req.times, req.current);
+  else if (req.action === 'pause') clearAlarms();
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -25,6 +16,17 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     }
   });
 });
+
+const createAlarms = (names, times, current) => {
+  times.forEach((time, i) => {
+    if (time === 0 || names[i] === '') return;
+
+    chrome.alarms.create(names[i], {
+      delayInMinutes: current[i] / 60,
+      periodInMinutes: time / 60,
+    });
+  });
+};
 
 const clearAlarms = () => {
   chrome.storage.local.get('names', ({ names }) => {

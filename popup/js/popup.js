@@ -11,12 +11,6 @@ const save = () => {
   });
 };
 
-chrome.runtime.onMessage.addListener((req, sender, res) => {
-  if (req.action === 'getCurrent') {
-    res({ current });
-  }
-});
-
 chrome.storage.local.get(['times', 'names', 'level', 'active', 'start'], (res) => {
   if (!res.times) return;
 
