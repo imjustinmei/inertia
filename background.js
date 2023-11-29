@@ -1,6 +1,9 @@
 chrome.runtime.onStartup.addListener(() => {
   clearAlarms();
-  chrome.storage.local.get(['times', 'names'], (res) => createAlarms(res.names, res.times, res.times));
+  chrome.storage.local.get(['active'], (response) => {
+    if (response.active) chrome.storage.local.get(['times', 'names'], (res) => createAlarms(res.names, res.times, res.times));
+  });
+
   chrome.storage.local.set({ start: Date.now() });
 });
 

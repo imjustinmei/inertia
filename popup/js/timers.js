@@ -6,7 +6,7 @@ const update = (input) => {
 const pad = (input) => {
   let value = input.value.replace(/\D/g, '').padStart(4, '0');
   let time = Math.min(3600, value.substring(0, 2) * 60 + parseInt(value.substring(2)));
-  time = Math.max(0, Math.min(3600, value.substring(0, 2) * 60 + parseInt(value.substring(2))));
+  time = Math.max(60, Math.min(3600, value.substring(0, 2) * 60 + parseInt(value.substring(2))));
 
   input.value = convert(time);
   times[input.id] = current[input.id] = time;
